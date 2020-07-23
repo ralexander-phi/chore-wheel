@@ -15,7 +15,6 @@ const DEFAULT_CHORES = {
 window.onload = function() {
   var wheel = document.querySelector('#wheel');
   var heading = document.querySelector('h1');
-  var dayElms = [];
 
   function showChores() {
     var chores = JSON.parse(localStorage.getItem('chores'));
@@ -106,11 +105,9 @@ window.onload = function() {
         loadNextDay();
         showChores();
       });
-    document.querySelector('#defaultChores')
+    document.querySelector('#editChores')
       .addEventListener('click', function() {
-        localStorage.removeItem('chores');
-        initChores();
-        showChores();
+        window.location = 'edit.html';
       });
   }
 

@@ -1,0 +1,48 @@
+.choreSchedule {
+  background-color: #779;
+  font-size: 1.5em;
+  padding: 1em;
+  margin: 0.5em;
+  border-radius: 0.8em;
+}
+
+.dayOfWeek {
+  background-color: #999;
+  color: #555;
+  font-size: 0.9em;
+  display: inline-block;
+  padding: 0.4em;
+  margin: 0.2em;
+  border-radius: 0.3em;
+}
+
+.dayOfWeek.active {
+  background-color: #335;
+  color: #ccc;
+}
+
+.choreTitle {
+  color: #333;
+  font-size: 1.2em;
+}
+
+.removeText {
+  color: #900;
+  font-size: 0.8em;
+}
+
+.choreTitleLine {
+  margin-bottom: 0.9em;
+}
+
+button {
+  color: #333;
+  background-color: #c50;
+  font-size: 1.2em;
+  size: 2em;
+  border: none;
+  padding: 0.4em;
+  margin: 0.7em;
+  border-radius: 0.3em;
+}
+
