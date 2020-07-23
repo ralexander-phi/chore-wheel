@@ -1,0 +1,31 @@
+#wheel {
+  background-color: #779;
+  padding: 0.4em;
+  border-radius: 0.3em;
+}
+
+.task {
+  color: #999;
+  background-color: #313;
+  font-size: 1.7em;
+  margin: 0.4em;
+  padding: 0.4em;
+  border-radius: 0.3em;
+  text-align: center;
+}
+
+.task.done {
+  color: #999;
+  background-color: #ccd;
+}
+
+button {
+  color: #333;
+  background-color: #c50;
+  font-size: 1.2em;
+  size: 2em;
+  border: none;
+  padding: 0.4em;
+  margin: 0.7em;
+  border-radius: 0.3em;
+}
