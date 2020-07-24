@@ -47,12 +47,14 @@ window.onload = function() {
 
       var removeChoreElm = document.createElement('div');
       removeChoreElm.innerHTML = "remove";
+      removeChoreElm.classList.add('textButton');
       removeChoreElm.classList.add('removeText');
       removeChoreElm.addEventListener('click', generateRemoveChore(choreIdx));
       titleLineElm.appendChild(removeChoreElm);
 
       var renameChoreElm = document.createElement('div');
       renameChoreElm.innerHTML = "rename";
+      renameChoreElm.classList.add('textButton');
       renameChoreElm.classList.add('renameText');
       renameChoreElm.addEventListener('click', generateRenameChore(choreIdx));
       titleLineElm.appendChild(renameChoreElm);
