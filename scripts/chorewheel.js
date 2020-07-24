@@ -74,7 +74,9 @@ window.onload = function() {
       }
     }
 
-    confetti.start(2000);
+    if (typeof confetti !== 'undefined') {
+      confetti.start(3000);
+    }
   }
 
   function loadNextDay() {
