@@ -15,6 +15,9 @@ const DEFAULT_CHORES = {
   ],
   'currentChoreStatus': null,
   'currentDay': null,
+  'settings': {
+    'confetti': true,
+  },
 }
 
 window.onload = function() {
@@ -79,8 +82,18 @@ window.onload = function() {
       }
     }
 
+    onWin(chores);
+  }
+
+  function onWin(chores) {
     if (typeof confetti !== 'undefined') {
-      confetti.start(3000);
+      if (typeof chores['settings'] !== 'undefined') {
+        if (typeof chores['settings']['confetti'] !== 'undefined') {
+          if (Boolean(chores['settings']['confetti'])) {
+            confetti.start(3000);
+          }
+        }
+      }
     }
   }
 

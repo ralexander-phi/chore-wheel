@@ -4,6 +4,7 @@ const DAYS = [
 
 window.onload = function() {
   var chores = null;
+  var confettiToggle = document.querySelector("#confetti");
 
   function loadChores() {
     chores = JSON.parse(localStorage.getItem('chores'));
@@ -11,6 +12,16 @@ window.onload = function() {
 
   function saveChores() {
     localStorage.setItem('chores', JSON.stringify(chores));
+  }
+
+  function loadSettings() {
+    if (typeof chores['settings'] === 'undefined') {
+      chores['settings'] = {};
+    }
+    if (typeof chores['settings']['confetti'] === 'undefined') {
+      chores['settings']['confetti'] = true;
+    }
+    confettiToggle.checked = Boolean(chores['settings']['confetti']);
   }
 
   function showChores() {
@@ -121,10 +132,15 @@ window.onload = function() {
         saveChores();
         window.location = 'index.html?reload';
       });
+    confettiToggle.addEventListener('click', function() {
+      chores['settings']['confetti'] = confettiToggle.checked;
+      saveChores();
+    });
   }
 
   function load() {
     loadChores();
+    loadSettings();
     connectButtons();
     showChores();
   }
