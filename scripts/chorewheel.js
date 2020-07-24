@@ -58,7 +58,23 @@ window.onload = function() {
       }
     }
 
+    if (isDone) {
+      checkWin(chores);
+    }
+
     localStorage.setItem('chores', JSON.stringify(chores));
+  }
+
+  function checkWin(chores) {
+    for (var choreIdx in chores['currentChoreStatus']) {
+      var chore = chores['currentChoreStatus'][choreIdx];
+      if (!chore['isDone']) {
+        // This chore is not done
+        return;
+      }
+    }
+
+    confetti.start(2000);
   }
 
   function loadNextDay() {
