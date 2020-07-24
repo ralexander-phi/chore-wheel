@@ -29,10 +29,20 @@
 .removeText {
   color: #900;
   font-size: 0.8em;
+  display: inline-block;
+  padding: 0.3em;
+}
+
+.renameText {
+  color: #313;
+  font-size: 0.8em;
+  display: inline-block;
+  padding: 0.3em;
 }
 
 .choreTitleLine {
   margin-bottom: 0.9em;
+  display: block;
 }
 
 button {

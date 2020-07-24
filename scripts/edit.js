@@ -40,6 +40,12 @@ window.onload = function() {
       removeChoreElm.addEventListener('click', generateRemoveChore(choreIdx));
       titleLineElm.appendChild(removeChoreElm);
 
+      var renameChoreElm = document.createElement('div');
+      renameChoreElm.innerHTML = "rename";
+      renameChoreElm.classList.add('renameText');
+      renameChoreElm.addEventListener('click', generateRenameChore(choreIdx));
+      titleLineElm.appendChild(renameChoreElm);
+
       choreElm.appendChild(titleLineElm);
 
       for (var dayIdx in DAYS) {
@@ -67,22 +73,27 @@ window.onload = function() {
     }
   }
 
+  function generateRenameChore(choreIdx) {
+    return function() {
+      var oldTitle = chores['chores'][choreIdx]['title'];
+      var newTitle = prompt("Rename chore", oldTitle);
+      chores['chores'][choreIdx]['title'] = newTitle;
+      saveChores();
+      showChores();
+    }
+  }
+
   function generateToggleDay(choreIdx, dayIdx) {
     dayIdx = Number(dayIdx);
     return function() {
       var chore = chores['chores'][choreIdx];
-      console.log(chore['title']);
-      console.log(chore.days);
        var isActive = chore.days.includes(dayIdx);
 
       if (!isActive) {
-        console.log('Add');
         chore.days.push(dayIdx);
       } else {
-        console.log('Remove');
         for (var daysIdx in chore.days) {
           if (chore.days[daysIdx] == dayIdx) {
-            console.log('Removing day ' + DAYS[dayIdx]);
             chore.days.splice(daysIdx, 1);
             break;
           }
