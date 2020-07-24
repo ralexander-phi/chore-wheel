@@ -106,6 +106,8 @@ window.onload = function() {
   }
 
   function initChores() {
+    var params = new URLSearchParams(window.location.search);
+    var reloadDay = params.has('reload');
     var chores = localStorage.getItem('chores');
     if (chores === null) {
       console.log('No chores, loading defaults');
@@ -113,6 +115,9 @@ window.onload = function() {
       var today = new Date();
       chores['currentDay'] = new Date().getDay();
       localStorage.setItem('chores', JSON.stringify(chores));
+      reloadDay = true;
+    }
+    if (reloadDay) {
       loadChoresForDay();
     }
   }

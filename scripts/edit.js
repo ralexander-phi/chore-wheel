@@ -119,7 +119,7 @@ window.onload = function() {
     document.querySelector('#done')
       .addEventListener('click', function() {
         saveChores();
-        window.location = 'index.html';
+        window.location = 'index.html?reload';
       });
   }
 
