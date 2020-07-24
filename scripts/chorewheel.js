@@ -4,9 +4,14 @@ const DAYS = [
 
 const DEFAULT_CHORES = {
   'chores': [
-    { 'title': 'Dishes',
-      'days': [0,1,2,3,4,5,6],
-    },
+    { 'title': 'Cook dinner', 'days': [0,1,2,3,4,5,6] },
+    { 'title': 'Dishes', 'days': [0,1,2,3,4,5,6] },
+    { 'title': 'Laundry', 'days': [6] },
+    { 'title': 'Meal prep', 'days': [0] },
+    { 'title': 'Put trash out', 'days': [3] },
+    { 'title': 'Call mom', 'days': [5] },
+    { 'title': 'Vacuum', 'days': [2] },
+    { 'title': 'Mop', 'days': [4] },
   ],
   'currentChoreStatus': null,
   'currentDay': null,
