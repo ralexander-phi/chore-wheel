@@ -124,8 +124,17 @@ window.onload = function() {
   }
 
   function initChores() {
-    var params = new URLSearchParams(window.location.search);
-    var reloadDay = params.has('reload');
+    var reloadDay = false;
+    if (typeof window.location.search !== 'undefined') {
+      var qs = window.location.search.slice(1);
+      qs.split('&').forEach(function(item, index) {
+        var key = item.split('=')[0];
+        if (key == 'reload') {
+          reloadDay = true;
+        }
+      });
+    }
+
     var chores = localStorage.getItem('chores');
     if (chores === null) {
       console.log('No chores, loading defaults');
