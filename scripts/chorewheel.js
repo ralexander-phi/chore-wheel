@@ -159,6 +159,10 @@ window.onload = function() {
       .addEventListener('click', function() {
         window.location = 'edit.html';
       });
+    document.querySelector('#about')
+      .addEventListener('click', function() {
+        window.location = 'about.html';
+      });
   }
 
   function load() {

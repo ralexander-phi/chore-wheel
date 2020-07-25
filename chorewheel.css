@@ -32,7 +32,7 @@
   color: #333;
 }
 
-button {
+input, button {
   color: #333;
   background-color: #c50;
   font-size: 1.2em;
@@ -43,7 +43,7 @@ button {
   border-radius: 0.3em;
 }
 
-button:hover {
+input:hover, button:hover {
   color: #222;
   background-color: #a32;
 }
@@ -110,5 +110,21 @@ button:hover {
 .choreTitleLine {
   margin-bottom: 0.9em;
   display: block;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
 
