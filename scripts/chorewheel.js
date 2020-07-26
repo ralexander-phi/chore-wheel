@@ -20,11 +20,19 @@ const DEFAULT_CHORES = {
   },
 }
 
+function getChores() {
+  return JSON.parse(localStorage.getItem('chores'));
+}
+
+function saveChores(chores) {
+  localStorage.setItem('chores', JSON.stringify(chores));
+}
+
 function showChores() {
   var wheel = document.querySelector('#wheel');
   var heading = document.querySelector('h1');
 
-  var chores = JSON.parse(localStorage.getItem('chores'));
+  var chores = getChores();
   var todaysChores = chores['currentChoreStatus'];
   heading.innerHTML = 'Tasks for ' + DAYS[chores['currentDay']];
 
@@ -46,9 +54,21 @@ function showChores() {
   }
 }
 
-function tapTask(clickEvent) {
-  var chores = JSON.parse(localStorage.getItem('chores'));
+function updateChoreCompletion(title, isDone) {
+  var chores = getChores();
+  for (var choreIdx in chores['currentChoreStatus']) {
+    var chore = chores['currentChoreStatus'][choreIdx];
+    if (chore['title'] == title) {
+      chore['isDone'] = isDone;
+    }
+  }
+  if (isDone) {
+    checkWin(chores);
+  }
+  saveChores(chores);
+}
 
+function tapTask(clickEvent) {
   var isDone = false;
   if (clickEvent.target.classList.contains('done')) {
     clickEvent.target.classList.remove('done');
@@ -58,18 +78,7 @@ function tapTask(clickEvent) {
   }
 
   var title = clickEvent.target.innerHTML;
-  for (var choreIdx in chores['currentChoreStatus']) {
-    var chore = chores['currentChoreStatus'][choreIdx];
-    if (chore['title'] == title) {
-      chore['isDone'] = isDone;
-    }
-  }
-
-  if (isDone) {
-    checkWin(chores);
-  }
-
-  localStorage.setItem('chores', JSON.stringify(chores));
+  updateChoreCompletion(title, isDone);
 }
 
 function checkWin(chores) {
@@ -85,28 +94,22 @@ function checkWin(chores) {
 }
 
 function onWin(chores) {
-  if (typeof confetti !== 'undefined') {
-    if (typeof chores['settings'] !== 'undefined') {
-      if (typeof chores['settings']['confetti'] !== 'undefined') {
-        if (Boolean(chores['settings']['confetti'])) {
-          confetti.start(3000);
-        }
-      }
-    }
+  if (confetti && chores['settings'] && chores['settings']['confetti']) {
+    confetti.start(3000);
   }
 }
 
 function loadNextDay() {
-  var chores = JSON.parse(localStorage.getItem('chores'));
+  var chores = getChores();
   dayOfWeek = chores['currentDay'];
   dayOfWeek = (dayOfWeek + 1) % 7;
   chores['currentDay'] = dayOfWeek;
-  localStorage.setItem('chores', JSON.stringify(chores));
+  saveChores();
   loadChoresForDay();
 }
 
 function loadChoresForDay() {
-  var chores = JSON.parse(localStorage.getItem('chores'));
+  var chores = getChores();
   chores['currentChoreStatus'] = [];
   var dayOfWeek = chores['currentDay'];
   for (choreIdx in chores['chores']) {
@@ -119,7 +122,7 @@ function loadChoresForDay() {
         });
     }
   }
-  localStorage.setItem('chores', JSON.stringify(chores));
+  saveChores(chores);
 }
 
 function initChores() {
@@ -134,13 +137,13 @@ function initChores() {
     });
   }
 
-  var chores = localStorage.getItem('chores');
+  var chores = getChores();
   if (chores === null) {
     console.log('No chores, loading defaults');
     chores = DEFAULT_CHORES;
     var today = new Date();
     chores['currentDay'] = new Date().getDay();
-    localStorage.setItem('chores', JSON.stringify(chores));
+    saveChores(chores);
     reloadDay = true;
   }
   if (reloadDay) {

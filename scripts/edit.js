@@ -23,6 +23,59 @@ function loadSettings() {
   confettiToggle.checked = Boolean(chores['settings']['confetti']);
 }
 
+function showDays(choreIdx, choreElm) {
+  var chore = chores['chores'][choreIdx];
+  for (var dayIdx in DAYS) {
+    var dayStr = DAYS[dayIdx];
+    var dayToggle = document.createElement('div');
+    dayToggle.classList.add('dayOfWeek');
+    if (chore['days'].includes(Number(dayIdx))) {
+      dayToggle.classList.add('active');
+    }
+    dayToggle.addEventListener('click', generateToggleDay(choreIdx, dayIdx));
+    dayToggle.innerHTML = dayStr;
+    choreElm.appendChild(dayToggle);
+  }
+}
+
+function showChoreTitle(choreIdx, choreElm) {
+  var chore = chores['chores'][choreIdx];
+  var titleLineElm = document.createElement('div');
+  titleLineElm.classList.add('choreTitleLine');
+
+  var choreTitleElm = document.createElement('div');
+  choreTitleElm.classList.add('choreTitle');
+  choreTitleElm.innerHTML = chore['title'];
+  titleLineElm.appendChild(choreTitleElm);
+
+  var removeChoreElm = document.createElement('div');
+  removeChoreElm.innerHTML = "remove";
+  removeChoreElm.classList.add('textButton');
+  removeChoreElm.classList.add('removeText');
+  removeChoreElm.addEventListener('click', generateRemoveChore(choreIdx));
+  titleLineElm.appendChild(removeChoreElm);
+
+  var renameChoreElm = document.createElement('div');
+  renameChoreElm.innerHTML = "rename";
+  renameChoreElm.classList.add('textButton');
+  renameChoreElm.classList.add('renameText');
+  renameChoreElm.addEventListener('click', generateRenameChore(choreIdx));
+  titleLineElm.appendChild(renameChoreElm);
+
+  choreElm.appendChild(titleLineElm);
+}
+
+function showChore(choreIdx, editList) {
+  var chore = chores['chores'][choreIdx];
+  var choreElm = document.createElement('div');
+  choreElm.classList.add('choreSchedule');
+
+  showChoreTitle(choreIdx, choreElm);
+  showDays(choreIdx, choreElm);
+
+  editList.appendChild(choreElm);
+}
+
 function showChores() {
   var editList = document.querySelector('#editList');
 
@@ -32,48 +85,7 @@ function showChores() {
   }
 
   for (var choreIdx in chores['chores']) {
-    var chore = chores['chores'][choreIdx];
-    var choreElm = document.createElement('div');
-    choreElm.classList.add('choreSchedule');
-
-    var titleLineElm = document.createElement('div');
-    titleLineElm.classList.add('choreTitleLine');
-
-    var choreTitleElm = document.createElement('div');
-    choreTitleElm.classList.add('choreTitle');
-    choreTitleElm.innerHTML = chore['title'];
-    titleLineElm.appendChild(choreTitleElm);
-
-    var removeChoreElm = document.createElement('div');
-    removeChoreElm.innerHTML = "remove";
-    removeChoreElm.classList.add('textButton');
-    removeChoreElm.classList.add('removeText');
-    removeChoreElm.addEventListener('click', generateRemoveChore(choreIdx));
-    titleLineElm.appendChild(removeChoreElm);
-
-    var renameChoreElm = document.createElement('div');
-    renameChoreElm.innerHTML = "rename";
-    renameChoreElm.classList.add('textButton');
-    renameChoreElm.classList.add('renameText');
-    renameChoreElm.addEventListener('click', generateRenameChore(choreIdx));
-    titleLineElm.appendChild(renameChoreElm);
-
-    choreElm.appendChild(titleLineElm);
-
-    for (var dayIdx in DAYS) {
-      var dayStr = DAYS[dayIdx];
-      var dayToggle = document.createElement('div');
-      dayToggle.classList.add('dayOfWeek');
-      if (chore['days'].includes(Number(dayIdx))) {
-        dayToggle.classList.add('active');
-      }
-      dayToggle.addEventListener('click', generateToggleDay(choreIdx, dayIdx));
-      dayToggle.innerHTML = dayStr;
-      choreElm.appendChild(dayToggle);
-    }
-
-
-    editList.appendChild(choreElm);
+    showChore(choreIdx, editList);
   }
 }
 
