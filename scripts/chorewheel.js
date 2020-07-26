@@ -127,14 +127,8 @@ function loadChoresForDay() {
 
 function initChores() {
   var reloadDay = false;
-  if (typeof window.location.search !== 'undefined') {
-    var qs = window.location.search.slice(1);
-    qs.split('&').forEach(function(item, index) {
-      var key = item.split('=')[0];
-      if (key == 'reload') {
-        reloadDay = true;
-      }
-    });
+  if (window.location.hash == '#reload') {
+    reloadDay = true;
   }
 
   var chores = getChores();

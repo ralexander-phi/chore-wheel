@@ -145,7 +145,7 @@ function connectButtons() {
   document.querySelector('#done')
     .addEventListener('click', function() {
       saveChores();
-      window.location = 'index.html?reload';
+      window.location = './#reload';
     });
   confettiToggle.addEventListener('click', function() {
     chores['settings']['confetti'] = confettiToggle.checked;
