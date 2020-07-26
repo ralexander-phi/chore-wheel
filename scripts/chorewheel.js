@@ -104,7 +104,7 @@ function loadNextDay() {
   dayOfWeek = chores['currentDay'];
   dayOfWeek = (dayOfWeek + 1) % 7;
   chores['currentDay'] = dayOfWeek;
-  saveChores();
+  saveChores(chores);
   loadChoresForDay();
 }
 
