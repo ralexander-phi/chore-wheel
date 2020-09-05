@@ -1,8 +1,4 @@
-const DAYS = [
-  'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
-];
-
-const DEFAULT_CHORES = {
+var DEFAULT_CHORES = {
   'chores': [
     { 'title': 'Cook dinner', 'days': [0,1,2,3,4,5,6] },
     { 'title': 'Dishes', 'days': [0,1,2,3,4,5,6] },
@@ -18,23 +14,15 @@ const DEFAULT_CHORES = {
   'settings': {
     'confetti': true,
   },
-}
-
-function getChores() {
-  return JSON.parse(localStorage.getItem('chores'));
-}
-
-function saveChores(chores) {
-  localStorage.setItem('chores', JSON.stringify(chores));
-}
+};
 
 function showChores() {
   var wheel = document.querySelector('#wheel');
   var heading = document.querySelector('h1');
 
   var chores = getChores();
-  var todaysChores = chores['currentChoreStatus'];
-  heading.innerHTML = 'Tasks for ' + DAYS[chores['currentDay']];
+  var todaysChores = chores.currentChoreStatus;
+  heading.innerHTML = 'Tasks for ' + DAYS[chores.currentDay];
 
   // Clear old chores
   while (wheel.firstChild) {
@@ -45,10 +33,10 @@ function showChores() {
     var chore = todaysChores[idx];
     var itemElm = document.createElement('div');
     itemElm.classList.add('task');
-    if (chore['isDone']) {
+    if (chore.isDone) {
       itemElm.classList.add('done');
     }
-    itemElm.innerHTML = chore['title'];
+    itemElm.innerHTML = chore.title;
     itemElm.addEventListener('click', tapTask);
     wheel.appendChild(itemElm);
   }
@@ -56,10 +44,10 @@ function showChores() {
 
 function updateChoreCompletion(title, isDone) {
   var chores = getChores();
-  for (var choreIdx in chores['currentChoreStatus']) {
-    var chore = chores['currentChoreStatus'][choreIdx];
-    if (chore['title'] == title) {
-      chore['isDone'] = isDone;
+  for (var choreIdx in chores.currentChoreStatus) {
+    var chore = chores.currentChoreStatus[choreIdx];
+    if (chore.title == title) {
+      chore.isDone = isDone;
     }
   }
   if (isDone) {
@@ -82,9 +70,9 @@ function tapTask(clickEvent) {
 }
 
 function checkWin(chores) {
-  for (var choreIdx in chores['currentChoreStatus']) {
-    var chore = chores['currentChoreStatus'][choreIdx];
-    if (!chore['isDone']) {
+  for (var choreIdx in chores.currentChoreStatus) {
+    var chore = chores.currentChoreStatus[choreIdx];
+    if (!chore.isDone) {
       // This chore is not done
       return;
     }
@@ -94,30 +82,30 @@ function checkWin(chores) {
 }
 
 function onWin(chores) {
-  if (confetti && chores['settings'] && chores['settings']['confetti']) {
+  if (confetti && chores.settings && chores.settings.confetti) {
     confetti.start(3000);
   }
 }
 
 function loadNextDay() {
   var chores = getChores();
-  dayOfWeek = chores['currentDay'];
+  dayOfWeek = chores.currentDay;
   dayOfWeek = (dayOfWeek + 1) % 7;
-  chores['currentDay'] = dayOfWeek;
+  chores.currentDay = dayOfWeek;
   saveChores(chores);
   loadChoresForDay();
 }
 
 function loadChoresForDay() {
   var chores = getChores();
-  chores['currentChoreStatus'] = [];
-  var dayOfWeek = chores['currentDay'];
-  for (choreIdx in chores['chores']) {
-    var chore = chores['chores'][choreIdx];
-    if (chore['days'].includes(dayOfWeek)) {
+  chores.currentChoreStatus = [];
+  var dayOfWeek = chores.currentDay;
+  for (var choreIdx in chores.chores) {
+    var chore = chores.chores[choreIdx];
+    if (chore.days.includes(dayOfWeek)) {
       // This task needs to be done today
-      chores['currentChoreStatus'].push({
-          'title': chore['title'],
+      chores.currentChoreStatus.push({
+          'title': chore.title,
           'isDone': false
         });
     }
@@ -136,7 +124,7 @@ function initChores() {
     console.log('No chores, loading defaults');
     chores = DEFAULT_CHORES;
     var today = new Date();
-    chores['currentDay'] = new Date().getDay();
+    chores.currentDay = new Date().getDay();
     saveChores(chores);
     reloadDay = true;
   }
@@ -165,4 +153,5 @@ window.onload = function() {
   initChores();
   showChores();
   connectButtons();
-}
+};
+

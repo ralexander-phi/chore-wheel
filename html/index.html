@@ -3,10 +3,20 @@
 <head>
 <meta charset="utf-8">
 
-<title>Weekly Chore Tracker (edit)</title>
+<title>Weekly Chore Tracker</title>
 
-<link rel="stylesheet" type="text/css" href="/style.css">
-<link rel="stylesheet" type="text/css" href="chorewheel.css">
+<link rel="stylesheet" type="text/css" href="chorewheel.min.css">
+
+<link rel="manifest" href="manifest.json">
+
+<!-- Add to home screen for Safari on iOS -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Weekly Chore Tracker">
+<link rel="apple-touch-icon" href="img/icon/152x152.png">
+<!-- Windows -->
+<meta name="msapplication-TileImage" content="img/icon/144x144.png">
+<meta name="msapplication-TileColor" content="#2F3BA2">
 
 <link rel="apple-touch-icon" sizes="57x57" href="img/favicon/apple-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="60x60" href="img/favicon/apple-icon-60x60.png">
@@ -22,26 +32,23 @@
 <link rel="icon" type="image/png" sizes="96x96" href="img/favicon/favicon-96x96.png">
 <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
 
-<script defer type="text/javascript" src="scripts/edit.js"></script>
+
+<!-- Reference: https://github.com/mathusummut/confetti.js -->
+<script defer type="text/javascript" src="confetti.min.js"></script>
+
+<script defer type="text/javascript" src="chorewheel.min.js"></script>
+<script defer type="text/javascript" src="app.min.js"></script>
 </head>
 
 <body>
 
-<h1>Edit Chores</h1>
+<h1></h1>
 
-<div id="editList"></div>
+<div id="wheel"></div>
 
-<button id="addChore">Add Chore</button>
-<button id="done">Done</button>
-
-<p>
-<input type="checkbox" id="confetti">
-<label for="confetti">Rain confetti when all chores are done</label>
-</p>
-
-<p>
-Want to add some more fun? Add some <a href="https://www.emojicopy.com/" target="_blank">emoji!</a>
-<p>
+<button id="nextDay">Complete Day</button>
+<button id="editChores">Edit Chores</button>
+<button id="about">About</button>
 
 </body>
 </html>

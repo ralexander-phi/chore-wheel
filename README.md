@@ -6,3 +6,15 @@ Keep track of recurring chores with this minimal chore tracker.
 
 [Hosted here](https://alexsci.com/chore-wheel/)
 
+## Building
+
+As this project is hosted on GitHub pages, the built code is placed in the `docs` folder.
+
+Build with:
+
+    $ apt install npm
+    $ npm install -g grunt
+    $ npm install
+    $ grunt
+
+
