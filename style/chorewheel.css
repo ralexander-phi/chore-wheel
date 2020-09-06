@@ -95,6 +95,10 @@ input:hover, button:hover {
   color: #ccc;
 }
 
+.dayOfWeek:not(.active) {
+  text-decoration: line-through;
+}
+
 .dayOfWeek:hover {
   background-color: #667;
   color: #333;
