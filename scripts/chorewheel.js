@@ -78,7 +78,10 @@ function loadNextDay() {
 }
 
 function initChores() {
-  getChores();
+  var chores = getChores();
+  if (window.location.hash === '#reload') {
+    loadChoresForDay(chores);
+  }
 }
 
 function connectButtons() {
