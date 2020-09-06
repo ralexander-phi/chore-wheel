@@ -43,6 +43,7 @@ h4 {
 .task.done {
   background-color: #999;
   color: #555;
+  text-decoration: line-through;
 }
 
 .task:hover {
