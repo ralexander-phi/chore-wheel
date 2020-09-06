@@ -89,9 +89,11 @@ function generateRenameChore(choreIdx) {
   return function() {
     var oldTitle = chores.chores[choreIdx].title;
     var newTitle = prompt("Rename chore", oldTitle);
-    chores.chores[choreIdx].title = newTitle;
-    saveChores(chores);
-    showChores();
+    if (newTitle != null) {
+      chores.chores[choreIdx].title = newTitle;
+      saveChores(chores);
+      showChores();
+    }
   };
 }
 
@@ -123,12 +125,14 @@ function connectButtons() {
   document.querySelector('#addChore')
     .addEventListener('click', function() {
       var title = prompt("What task do you need to add?", "Water plants");
-      chores.chores.push(
-        { 'title': title,
-          'days': [0,1,2,3,4,5,6],
-        });
-      saveChores(chores);
-      showChores();
+      if (title != null) {
+        chores.chores.push(
+          { 'title': title,
+            'days': [0,1,2,3,4,5,6],
+          });
+        saveChores(chores);
+        showChores();
+      }
     });
   document.querySelector('#done')
     .addEventListener('click', function() {
