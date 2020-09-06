@@ -11,17 +11,15 @@ module.exports = function(grunt) {
       },
       default: {
         files: {
-          'docs/app.min.js': ['scripts/app.js'],
-          'docs/chorewheel.min.js': ['scripts/common.js', 'scripts/chorewheel.js'],
-          'docs/edit.min.js': ['scripts/common.js', 'scripts/edit.js'],
-          'docs/service-worker.js': ['scripts/service-worker.js'],
+          'docs/chorewheel.js': ['scripts/common.js', 'scripts/chorewheel.js'],
+          'docs/edit.js': ['scripts/common.js', 'scripts/edit.js'],
         }
       }
     },
     cssmin: {
       default: {
         files: {
-          'docs/chorewheel.min.css': ['style/chorewheel.css'],
+          'docs/chorewheel.css': ['style/chorewheel.css'],
         }
       }
     },
@@ -45,18 +43,10 @@ module.exports = function(grunt) {
         }
       }
     },
-    copy: {
-      default: {
-        files: {
-          'docs/manifest.json': 'manifest.json',
-        }
-      }
-    }
   });
   grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.registerTask("default", ["jshint", "cssmin", "uglify", "htmlmin", "copy"]);
+  grunt.registerTask("default", ["jshint", "cssmin", "uglify", "htmlmin"]);
 };

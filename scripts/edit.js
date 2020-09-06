@@ -142,9 +142,9 @@ function connectButtons() {
 }
 
 window.onload = function() {
+  connectButtons();
   chores = getChores();
   loadSettings();
-  connectButtons();
   showChores();
 };
 

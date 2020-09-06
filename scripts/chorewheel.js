@@ -1,21 +1,3 @@
-var DEFAULT_CHORES = {
-  'chores': [
-    { 'title': 'Cook dinner', 'days': [0,1,2,3,4,5,6] },
-    { 'title': 'Dishes', 'days': [0,1,2,3,4,5,6] },
-    { 'title': 'Laundry', 'days': [6] },
-    { 'title': 'Meal prep', 'days': [0] },
-    { 'title': 'Put trash out', 'days': [3] },
-    { 'title': 'Call mom', 'days': [5] },
-    { 'title': 'Vacuum', 'days': [2] },
-    { 'title': 'Mop', 'days': [4] },
-  ],
-  'currentChoreStatus': null,
-  'currentDay': null,
-  'settings': {
-    'confetti': true,
-  },
-};
-
 function showChores() {
   var wheel = document.querySelector('#wheel');
   var heading = document.querySelector('h1');
@@ -92,45 +74,11 @@ function loadNextDay() {
   dayOfWeek = chores.currentDay;
   dayOfWeek = (dayOfWeek + 1) % 7;
   chores.currentDay = dayOfWeek;
-  saveChores(chores);
-  loadChoresForDay();
-}
-
-function loadChoresForDay() {
-  var chores = getChores();
-  chores.currentChoreStatus = [];
-  var dayOfWeek = chores.currentDay;
-  for (var choreIdx in chores.chores) {
-    var chore = chores.chores[choreIdx];
-    if (chore.days.includes(dayOfWeek)) {
-      // This task needs to be done today
-      chores.currentChoreStatus.push({
-          'title': chore.title,
-          'isDone': false
-        });
-    }
-  }
-  saveChores(chores);
+  loadChoresForDay(chores);
 }
 
 function initChores() {
-  var reloadDay = false;
-  if (window.location.hash == '#reload') {
-    reloadDay = true;
-  }
-
-  var chores = getChores();
-  if (chores === null) {
-    console.log('No chores, loading defaults');
-    chores = DEFAULT_CHORES;
-    var today = new Date();
-    chores.currentDay = new Date().getDay();
-    saveChores(chores);
-    reloadDay = true;
-  }
-  if (reloadDay) {
-    loadChoresForDay();
-  }
+  getChores();
 }
 
 function connectButtons() {
@@ -150,8 +98,15 @@ function connectButtons() {
 }
 
 window.onload = function() {
+  // Previously used service workers should be removed
+  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+    for (var i = 0; i < registrations.length; i++) {
+      registrations[i].unregister();
+    }
+  });
+
+  connectButtons();
   initChores();
   showChores();
-  connectButtons();
 };
 
