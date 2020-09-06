@@ -27,7 +27,6 @@ module.exports = function(grunt) {
       options: {
         collapseBooleanAttributes: true,
         collapseInlineTagWhitespace: true,
-        collapseWhitespace: true,
         removeComments: true,
         removeRedundantAttributes: true,
         removeScriptTypeAttributes: true,
