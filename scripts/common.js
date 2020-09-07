@@ -18,6 +18,9 @@ var DEFAULT_CHORES = {
     { 'title': 'Vacuum', 'days': [2] },
     { 'title': 'Mop', 'days': [4] },
   ],
+  'reminders': [
+    { 'title': 'Edit to customize', 'snoozedUntil': null },
+  ],
   'version': '2020-09-05',
   'currentChoreStatus': null,
   'currentDay': null,
@@ -26,58 +29,86 @@ var DEFAULT_CHORES = {
   },
 };
 
-function getChores() {
-  chores = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_NAME));
-  if (chores === null) {
+function getData() {
+  var data = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_NAME));
+  if (data === null) {
     console.log('Checking old name');
-    chores = JSON.parse(localStorage.getItem(LOCAL_STORAGE_OLD_KEY_NAME));
+    data = JSON.parse(localStorage.getItem(LOCAL_STORAGE_OLD_KEY_NAME));
   }
 
-  if (chores !== null) {
-    if (typeof chores.version === 'undefined') {
-      chores = upgradeLegacy(chores);
-    } else if (chores.version === '2020-09-05') {
-      // latest
+  if (data !== null) {
+    if (typeof data.version === 'undefined') {
+      data = upgradeLegacy(data);
+    } else if (data.version === '2020-09-05') {
+      data = minorUpgrades(data);
     } else {
       console.log('Unknown version!');
     }
-    return chores;
+    return data;
   } else {
     console.log('No chores, loading defaults');
-    chores = DEFAULT_CHORES;
+    data = DEFAULT_CHORES;
     var today = new Date();
-    chores.currentDay = new Date().getDay();
-    return loadChoresForDay(chores);
+    data.currentDay = new Date().getDay();
+    return loadChoresForDay(data);
   }
 }
 
-function upgradeLegacy(chores) {
-  chores.version = '2020-09-05';
-  saveChores(chores);
+// For minor data format changes, just update on load
+function minorUpgrades(data) {
+  // Confetti
+  if (typeof data.settings === 'undefined') {
+    data.settings = {};
+  }
+  if (typeof data.settings.confetti === 'undefined') {
+    data.settings.confetti = true;
+  }
+
+  // Reminders
+  if (typeof(data.reminders) === 'undefined') {
+    data.reminders = [];
+  }
+
+  saveData(data);
+  return data;
+}
+
+function upgradeLegacy(data) {
+  data.version = '2020-09-05';
+  saveData(data);
 
   // Get rid of the old data
   localStorage.removeItem(LOCAL_STORAGE_OLD_KEY_NAME);
 
-  return chores;
+  return data;
 }
 
-function saveChores(chores) {
-  localStorage.setItem(LOCAL_STORAGE_KEY_NAME, JSON.stringify(chores));
+function saveData(data) {
+  localStorage.setItem(LOCAL_STORAGE_KEY_NAME, JSON.stringify(data));
 }
 
-function loadChoresForDay(chores) {
-  chores.currentChoreStatus = [];
-  var dayOfWeek = chores.currentDay;
-  for (var choreIdx in chores.chores) {
-    var chore = chores.chores[choreIdx];
+function loadChoresForDay(data) {
+  data.currentChoreStatus = [];
+  var dayOfWeek = data.currentDay;
+  for (var choreIdx in data.chores) {
+    var chore = data.chores[choreIdx];
     if (chore.days.includes(dayOfWeek)) {
       // This task needs to be done today
-      chores.currentChoreStatus.push({
+      data.currentChoreStatus.push({
           'title': chore.title,
           'isDone': false
         });
     }
   }
-  saveChores(chores);
-  return chores;
+
+  for (var reminderIdx in data.reminders) {
+    var reminder = data.reminders[reminderIdx];
+    if (reminder.snoozedUntil == data.currentDay) {
+      // This reminder is now active
+      reminder.snoozedUntil = null;
+    }
+  }
+
+  saveData(data);
+  return data;
 }

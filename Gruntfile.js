@@ -13,6 +13,7 @@ module.exports = function(grunt) {
         files: {
           'docs/chorewheel.js': ['scripts/common.js', 'scripts/chorewheel.js'],
           'docs/edit.js': ['scripts/common.js', 'scripts/edit.js'],
+          'docs/remind.js': ['scripts/common.js', 'scripts/remind.js'],
         }
       }
     },
@@ -39,6 +40,7 @@ module.exports = function(grunt) {
           'docs/about.html': 'html/about.html',
           'docs/edit.html': 'html/edit.html',
           'docs/index.html': 'html/index.html',
+          'docs/remind.html': 'html/remind.html',
         }
       }
     },

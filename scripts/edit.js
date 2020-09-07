@@ -1,18 +1,12 @@
-var chores = null;
+var data = null;
 
 function loadSettings() {
   var confettiToggle = document.querySelector("#confetti");
-  if (typeof chores.settings === 'undefined') {
-    chores.settings = {};
-  }
-  if (typeof chores.settings.confetti === 'undefined') {
-    chores.settings.confetti = true;
-  }
-  confettiToggle.checked = Boolean(chores.settings.confetti);
+  confettiToggle.checked = Boolean(data.settings.confetti);
 }
 
 function showDays(choreIdx, choreElm) {
-  var chore = chores.chores[choreIdx];
+  var chore = data.chores[choreIdx];
   for (var dayIdx in DAYS) {
     var dayStr = DAYS[dayIdx];
     var dayToggle = document.createElement('div');
@@ -27,7 +21,7 @@ function showDays(choreIdx, choreElm) {
 }
 
 function showChoreTitle(choreIdx, choreElm) {
-  var chore = chores.chores[choreIdx];
+  var chore = data.chores[choreIdx];
   var titleLineElm = document.createElement('div');
   titleLineElm.classList.add('choreTitleLine');
 
@@ -54,7 +48,7 @@ function showChoreTitle(choreIdx, choreElm) {
 }
 
 function showChore(choreIdx, editList) {
-  var chore = chores.chores[choreIdx];
+  var chore = data.chores[choreIdx];
   var choreElm = document.createElement('div');
   choreElm.classList.add('choreSchedule');
 
@@ -72,26 +66,28 @@ function showChores() {
     editList.removeChild(editList.lastChild);
   }
 
-  for (var choreIdx in chores.chores) {
+  for (var choreIdx in data.chores) {
     showChore(choreIdx, editList);
   }
 }
 
 function generateRemoveChore(choreIdx) {
   return function() {
-    chores.chores.splice(choreIdx, 1);
-    saveChores(chores);
+    data.chores.splice(choreIdx, 1);
+    saveData(data);
+    loadChoresForDay(data);
     showChores();
   };
 }
 
 function generateRenameChore(choreIdx) {
   return function() {
-    var oldTitle = chores.chores[choreIdx].title;
+    var oldTitle = data.chores[choreIdx].title;
     var newTitle = prompt("Rename chore", oldTitle);
     if (newTitle != null) {
-      chores.chores[choreIdx].title = newTitle;
-      saveChores(chores);
+      data.chores[choreIdx].title = newTitle;
+      saveData(data);
+      loadChoresForDay(data);
       showChores();
     }
   };
@@ -100,7 +96,7 @@ function generateRenameChore(choreIdx) {
 function generateToggleDay(choreIdx, dayIdx) {
   dayIdx = Number(dayIdx);
   return function() {
-    var chore = chores.chores[choreIdx];
+    var chore = data.chores[choreIdx];
       var isActive = chore.days.includes(dayIdx);
 
     if (!isActive) {
@@ -113,8 +109,9 @@ function generateToggleDay(choreIdx, dayIdx) {
         }
       }
     }
-    // hard refesh
-    saveChores(chores);
+    // hard refresh
+    saveData(data);
+    loadChoresForDay(data);
     showChores();
   };
 }
@@ -126,28 +123,31 @@ function connectButtons() {
     .addEventListener('click', function() {
       var title = prompt("What task do you need to add?", "Water plants");
       if (title != null) {
-        chores.chores.push(
+        data.chores.push(
           { 'title': title,
             'days': [0,1,2,3,4,5,6],
           });
-        saveChores(chores);
+        saveData(data);
+        loadChoresForDay(data);
         showChores();
       }
     });
+
   document.querySelector('#done')
     .addEventListener('click', function() {
-      saveChores(chores);
-      window.location = './#reload';
+      saveData(data);
+      window.location = './';
     });
+
   confettiToggle.addEventListener('click', function() {
-    chores.settings.confetti = confettiToggle.checked;
-    saveChores(chores);
+    data.settings.confetti = confettiToggle.checked;
+    saveData(data);
   });
 }
 
 window.onload = function() {
   connectButtons();
-  chores = getChores();
+  data = getData();
   loadSettings();
   showChores();
 };

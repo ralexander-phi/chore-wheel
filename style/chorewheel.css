@@ -21,12 +21,62 @@ h4 {
   margin-bottom: 0;
 }
 
+#reminder {
+  background-color: #444;
+  padding: 2%;
+  border-radius: 0.3em 0.3em 0 0;
+  display: block;
+}
+
+.reminder {
+  background-color: #772;
+  margin: 1%;
+  font-size: 1.7em;
+  border-radius: 0.8em;
+  width: 94%;
+  display: inline-block;
+}
+
+.reminderText {
+  color: #ccc;
+  display: inline-block;
+  margin: 10px 10px 10px 20px;
+}
+
+.reminderButtons {
+  float: right;
+  margin: 0;
+  border-radius: 0.8em;
+  background-color: #222;
+  color: #aaa;
+  display: inline-block;
+}
+
+.reminder .button {
+  padding: 10px;
+  display: inline-block;
+  border-radius: 0.8em;
+}
+
+.reminder .button:hover {
+  background-color: #444;
+}
+
+.buttonSep {
+  border-left:1px solid #666;
+  display: inline-block;
+  height: 0.8em;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 #wheel {
   background-color: #779;
   padding: 2%;
-  border-radius: 0.3em;
+  border-radius: 0 0 0.3em 0.3em;
   display: block;
 }
+
 
 .task {
   background-color: #335;
@@ -72,6 +122,14 @@ input:hover, button:hover {
   background-color: #a32;
 }
 
+.reminderSettings {
+  background-color: #772;
+  font-size: 1.5em;
+  padding: 1em;
+  margin: 0.5em;
+  border-radius: 0.8em;
+}
+
 .choreSchedule {
   background-color: #779;
   font-size: 1.5em;
@@ -109,6 +167,7 @@ input:hover, button:hover {
   color: #ccc;
 }
 
+.reminderTitle,
 .choreTitle {
   color: #333;
   font-size: 1.2em;
@@ -135,6 +194,7 @@ input:hover, button:hover {
   color: #313;
 }
 
+.reminderTitleLine,
 .choreTitleLine {
   margin-bottom: 0.9em;
   display: block;
