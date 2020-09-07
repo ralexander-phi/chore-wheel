@@ -35,7 +35,7 @@ function show() {
       reminderElm.appendChild(reminderText);
 
       var buttonsElm = document.createElement('div');
-      buttonsElm.classList.add('reminderButtons');
+      buttonsElm.classList.add('buttons');
 
       var snoozeElm = document.createElement('div');
       snoozeElm.classList.add('button');

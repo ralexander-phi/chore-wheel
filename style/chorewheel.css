@@ -22,14 +22,15 @@ h4 {
 }
 
 #reminder {
-  background-color: #444;
+  background-color: #447;
   padding: 2%;
   border-radius: 0.3em 0.3em 0 0;
   display: block;
 }
 
+.chore,
 .reminder {
-  background-color: #772;
+  background-color: #779;
   margin: 1%;
   font-size: 1.7em;
   border-radius: 0.8em;
@@ -37,13 +38,14 @@ h4 {
   display: inline-block;
 }
 
+.choreText,
 .reminderText {
   color: #ccc;
   display: inline-block;
   margin: 10px 10px 10px 20px;
 }
 
-.reminderButtons {
+.buttons {
   float: right;
   margin: 0;
   border-radius: 0.8em;
@@ -52,13 +54,13 @@ h4 {
   display: inline-block;
 }
 
-.reminder .button {
+.button {
   padding: 10px;
   display: inline-block;
   border-radius: 0.8em;
 }
 
-.reminder .button:hover {
+.button:hover {
   background-color: #444;
 }
 
@@ -122,35 +124,31 @@ input:hover, button:hover {
   background-color: #a32;
 }
 
-.reminderSettings {
-  background-color: #772;
-  font-size: 1.5em;
-  padding: 1em;
-  margin: 0.5em;
-  border-radius: 0.8em;
-}
-
-.choreSchedule {
-  background-color: #779;
-  font-size: 1.5em;
-  padding: 1em;
-  margin: 0.5em;
-  border-radius: 0.8em;
-}
-
 .dayOfWeek {
   background-color: #999;
   color: #555;
-  font-size: 0.9em;
+  font-size: 0.7em;
   display: inline-block;
-  padding: 0.4em;
-  margin: 0.2em;
-  border-radius: 0.3em;
+  width: 11.428%;
+  text-align: center;
+  padding: 1%;
 }
 
 .dayOfWeek.active {
   background-color: #335;
   color: #ccc;
+}
+
+.dayOfWeek:not(.Sunday) {
+  margin-left: 1%;
+}
+
+.dayOfWeek.Sunday {
+  border-radius: 0 0 0 0.8em;
+}
+
+.dayOfWeek.Saturday{
+  border-radius: 0 0 0.8em 0;
 }
 
 .dayOfWeek:not(.active) {
@@ -167,10 +165,12 @@ input:hover, button:hover {
   color: #ccc;
 }
 
-.reminderTitle,
-.choreTitle {
-  color: #333;
-  font-size: 1.2em;
+.choreTop {
+  display: block;
+}
+
+.choreBottom {
+  margin-top: 0.6em;
 }
 
 .textButton {
@@ -186,18 +186,9 @@ input:hover, button:hover {
   background-color: #cce;
 }
 
-.removeText {
+.textButton.removeText {
   color: #900;
-}
-
-.renameText {
-  color: #313;
-}
-
-.reminderTitleLine,
-.choreTitleLine {
-  margin-bottom: 0.9em;
-  display: block;
+  float: right;
 }
 
 table {

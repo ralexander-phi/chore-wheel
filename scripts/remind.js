@@ -4,12 +4,12 @@ function createReminderTitleElm(reminder, reminderIdx) {
 
   var reminderText = document.createElement('div');
   reminderText.classList.add('reminderText');
-  reminderText.innerHTML = reminder.title;
+  reminderText.innerHTML = "✏️ " + reminder.title;
   reminderText.addEventListener('click', generateRenameReminder(reminderIdx));
   reminderElm.appendChild(reminderText);
 
   var buttonsElm = document.createElement('div');
-  buttonsElm.classList.add('reminderButtons');
+  buttonsElm.classList.add('buttons');
 
   var snoozeElm = document.createElement('div');
   snoozeElm.classList.add('button');
