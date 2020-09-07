@@ -34,8 +34,21 @@ h4 {
   margin: 1%;
   font-size: 1.7em;
   border-radius: 0.8em;
-  width: 94%;
+  width: 98%;
   display: inline-block;
+}
+
+.chore {
+  background-color: #222;
+  box-shadow: 0.2em 0.2em 0.2em #444;
+}
+
+.task {
+  box-shadow: 0.2em 0.2em 0.2em #333;
+}
+
+.reminder {
+  box-shadow: 0.2em 0.2em 0.2em #000;
 }
 
 .choreText,
@@ -62,6 +75,10 @@ h4 {
 
 .button:hover {
   background-color: #444;
+}
+
+.choreTop .buttons {
+  border-radius: 0 0.8em 0 0;
 }
 
 .buttonSep {
@@ -117,6 +134,7 @@ input, button {
   padding: 0.4em;
   margin: 0.7em;
   border-radius: 0.3em;
+  box-shadow: 0.1em 0.1em 0.1em #555;
 }
 
 input:hover, button:hover {
@@ -166,29 +184,15 @@ input:hover, button:hover {
 }
 
 .choreTop {
+  background-color: #779;
   display: block;
+  border-radius: 0.8em 0.8em 0 0;
 }
 
 .choreBottom {
-  margin-top: 0.6em;
-}
-
-.textButton {
-  font-size: 0.8em;
-  display: inline-block;
-  padding: 0.3em;
-  background-color: #aad;
-  border-radius: 0.3em;
-  margin: 0.2em;
-}
-
-.textButton:hover {
-  background-color: #cce;
-}
-
-.textButton.removeText {
-  color: #900;
-  float: right;
+  background-color: #222;
+  padding-top: 0.6em;
+  border-radius: 0 0 0.8em 0.8em;
 }
 
 table {
