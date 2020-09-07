@@ -18,7 +18,7 @@ function createReminderTitleElm(reminder, reminderIdx) {
   if (reminder.snoozedUntil === null) {
     snoozeElm.innerHTML = "Active";
   } else {
-    snoozeElm.innerHTML = "Snoozed";
+    snoozeElm.innerHTML = "Snoozed until " + DAYS[reminder.snoozedUntil];
   }
   snoozeElm.addEventListener('click', generateSnoozeReminder(reminderIdx));
   buttonsElm.appendChild(snoozeElm);
@@ -71,7 +71,10 @@ function generateSnoozeReminder(reminderIdx) {
     if (reminder.snoozedUntil === null) {
       reminder.snoozedUntil = ((data.currentDay + 1) % 7);
     } else {
-      reminder.snoozedUntil = null;
+      reminder.snoozedUntil = ((reminder.snoozedUntil + 1) % 7);
+      if (reminder.snoozedUntil == data.currentDay) {
+        reminder.snoozedUntil = null;
+      }
     }
     saveData(data);
     showReminders();
