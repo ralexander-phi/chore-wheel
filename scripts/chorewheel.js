@@ -1,22 +1,17 @@
-function show() {
+function clear() {
   var wheel = document.querySelector('#wheel');
-  wheel.classList.add('is-flex');
-  wheel.classList.add('is-flex-direction-row');
-  wheel.classList.add('is-flex-wrap-wrap');
   var reminderList = document.querySelector('#reminder');
-  var heading = document.querySelector('h1');
 
-  var data = getData();
-  var todaysChores = data.currentChoreStatus;
-  heading.innerText = 'Tasks for ' + DAYS[data.currentDay];
-
-  // Clear
   while (wheel.firstChild) {
     wheel.removeChild(wheel.lastChild);
   }
   while (reminderList.firstChild) {
     reminderList.removeChild(reminderList.lastChild);
   }
+}
+
+function showReminders(data) {
+  var reminderList = document.querySelector('#reminder');
 
   if (data.reminders.length == 0) {
     // Pass
@@ -30,26 +25,21 @@ function show() {
       }
 
       var reminderElm = document.createElement('div');
-      reminderElm.classList.add('reminder');
-      reminderElm.classList.add('is-4');
-      reminderElm.classList.add('mt-4');
+      reminderElm.classList.add('reminder', 'is-4', 'mt-4');
 
       var reminderText = document.createElement('span');
-      reminderText.classList.add('title');
-      reminderText.classList.add('is-4');
+      reminderText.classList.add('title', 'is-4');
       reminderText.innerText = reminder.title;
       reminderElm.appendChild(reminderText);
 
       var snoozeElm = document.createElement('button');
-      snoozeElm.classList.add('button');
-      snoozeElm.classList.add('ml-5');
+      snoozeElm.classList.add('button', 'ml-5');
       snoozeElm.innerText = "Snooze";
       snoozeElm.addEventListener('click', generateTapSnooze(remIdx));
       reminderElm.appendChild(snoozeElm);
 
       var doneElm = document.createElement('button');
-      doneElm.classList.add('button');
-      doneElm.classList.add('ml-4');
+      doneElm.classList.add('button', 'ml-4');
       doneElm.innerText = "Complete";
       doneElm.addEventListener('click', generateTapDismiss(remIdx));
       reminderElm.appendChild(doneElm);
@@ -57,20 +47,34 @@ function show() {
       reminderList.appendChild(reminderElm);
     }
   }
+}
 
+function showChores(data) {
+  var wheel = document.querySelector('#wheel');
+  var todaysChores = data.currentChoreStatus;
   for (var chIdx in todaysChores) {
     var chore = todaysChores[chIdx];
     var button = document.createElement('div');
     wheel.appendChild(button);
-    button.classList.add('mr-6');
-    button.classList.add('mb-6');
-    button.classList.add('chore-wrap');
-    button.classList.add('button');
-    button.classList.add('p-5');
+    button.classList.add('mr-6', 'mb-6', 'chore-wrap', 'button', 'p-5');
     styleTask(button, chore.isDone);
     button.innerText = chore.title;
     button.addEventListener('click', tapTask);
   }
+}
+
+function show() {
+  var wheel = document.querySelector('#wheel');
+  wheel.classList.add('is-flex', 'is-flex-direction-row', 'is-flex-wrap-wrap');
+  var reminderList = document.querySelector('#reminder');
+  var heading = document.querySelector('h1');
+
+  var data = getData();
+  heading.innerText = 'Tasks for ' + DAYS[data.currentDay];
+
+  clear();
+  showReminders(data);
+  showChores(data);
 }
 
 function updateChoreCompletion(title, isDone) {
@@ -89,15 +93,11 @@ function updateChoreCompletion(title, isDone) {
 
 function styleTask(button, isDone) {
   if (isDone) {
-    button.classList.add('done');
-    button.classList.add('is-light');
-    button.classList.add('strikethrough');
+    button.classList.add('done', 'is-light', 'strikethrough');
     button.classList.remove('is-primary');
   } else {
     button.classList.add('is-primary');
-    button.classList.remove('is-light');
-    button.classList.remove('done');
-    button.classList.remove('strikethrough');
+    button.classList.remove('is-light', 'done', 'strikethrough');
   }
 }
 
@@ -150,7 +150,7 @@ function loadNextDay() {
   dayOfWeek = data.currentDay;
   dayOfWeek = (dayOfWeek + 1) % 7;
   data.currentDay = dayOfWeek;
-  loadChoresForDay(data);
+  loadDay(data);
 }
 
 function connectButtons() {

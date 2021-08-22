@@ -4,8 +4,6 @@ var DAYS = [
 
 // Where is data saved in local storage?
 var LOCAL_STORAGE_KEY_NAME = '5f6e898b-9338-49d9-b1da-84e2609bae9d-chores';
-// An older name used
-var LOCAL_STORAGE_OLD_KEY_NAME = 'chores';
 
 var DEFAULT_CHORES = {
   'chores': [
@@ -31,27 +29,21 @@ var DEFAULT_CHORES = {
 
 function getData() {
   var data = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_NAME));
-  if (data === null) {
-    console.log('Checking old name');
-    data = JSON.parse(localStorage.getItem(LOCAL_STORAGE_OLD_KEY_NAME));
-  }
 
-  if (data !== null) {
-    if (typeof data.version === 'undefined') {
-      data = upgradeLegacy(data);
-    } else if (data.version === '2020-09-05') {
-      data = minorUpgrades(data);
-    } else {
-      console.log('Unknown version!');
-    }
-    return data;
-  } else {
+  if (data == null) {
     console.log('No chores, loading defaults');
     data = DEFAULT_CHORES;
     var today = new Date();
     data.currentDay = new Date().getDay();
-    return loadChoresForDay(data);
+    return loadDay(data);
   }
+
+  if (data.version === '2020-09-05') {
+    data = minorUpgrades(data);
+  } else {
+    console.log('Unknown version!');
+  }
+  return data;
 }
 
 // For minor data format changes, just update on load
@@ -73,18 +65,15 @@ function minorUpgrades(data) {
   return data;
 }
 
-function upgradeLegacy(data) {
-  data.version = '2020-09-05';
-  saveData(data);
-
-  // Get rid of the old data
-  localStorage.removeItem(LOCAL_STORAGE_OLD_KEY_NAME);
-
-  return data;
-}
-
 function saveData(data) {
   localStorage.setItem(LOCAL_STORAGE_KEY_NAME, JSON.stringify(data));
+}
+
+function loadDay(data) {
+  data = loadChoresForDay(data);
+  data = loadRemindersForDay(data);
+  saveData(data);
+  return data;
 }
 
 function loadChoresForDay(data) {
@@ -100,7 +89,10 @@ function loadChoresForDay(data) {
         });
     }
   }
+  return data;
+}
 
+function loadRemindersForDay(data) {
   for (var reminderIdx in data.reminders) {
     var reminder = data.reminders[reminderIdx];
     if (reminder.snoozedUntil == data.currentDay) {
@@ -108,7 +100,5 @@ function loadChoresForDay(data) {
       reminder.snoozedUntil = null;
     }
   }
-
-  saveData(data);
   return data;
 }

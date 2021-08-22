@@ -7,17 +7,11 @@ function loadSettings() {
 
 function styleDay(elm, isActive) {
   if (isActive) {
-    elm.classList.add('is-primary');
-    elm.classList.add('has-text-weight-bold');
-    elm.classList.remove('is-dark');
-    elm.classList.remove('is-outlined');
-    elm.classList.remove('strikethrough');
+    elm.classList.add('is-primary', 'has-text-weight-bold');
+    elm.classList.remove('is-dark', 'is-outlined', 'strikethrough');
   } else {
-    elm.classList.remove('is-primary');
-    elm.classList.remove('has-text-weight-bold');
-    elm.classList.add('is-dark');
-    elm.classList.add('is-outlined');
-    elm.classList.add('strikethrough');
+    elm.classList.remove('is-primary', 'has-text-weight-bold');
+    elm.classList.add('is-dark', 'is-outlined', 'strikethrough');
   }
 }
 
@@ -30,9 +24,7 @@ function showDays(choreIdx, choreElm) {
   for (var dayIdx in DAYS) {
     var dayStr = DAYS[dayIdx];
     var dayToggle = document.createElement('button');
-    dayToggle.classList.add('button');
-    dayToggle.classList.add('m-2');
-    dayToggle.classList.add(DAYS[dayIdx]);
+    dayToggle.classList.add('button', 'm-2');
     var isActive = chore.days.includes(Number(dayIdx));
     styleDay(dayToggle, isActive);
     dayToggle.addEventListener('click', generateToggleDay(choreIdx, dayIdx));
@@ -48,22 +40,18 @@ function showChoreTitle(choreIdx, choreElm) {
   var choreTopElm = document.createElement('div');
 
   var choreTextElm = document.createElement('h2');
-  choreTextElm.classList.add('title');
-  choreTextElm.classList.add('is-3');
+  choreTextElm.classList.add('title', 'is-3');
   choreTextElm.innerText = chore.title;
   choreTopElm.appendChild(choreTextElm);
 
   var choreEditElm = document.createElement('button');
   choreEditElm.innerText = 'Rename';
-  choreEditElm.classList.add('button');
-  choreEditElm.classList.add('m-2');
+  choreEditElm.classList.add('button', 'm-2');
   choreEditElm.addEventListener('click', generateRenameChore(choreIdx));
   choreTopElm.appendChild(choreEditElm);
 
   var doneElm = document.createElement('div');
-  doneElm.classList.add('button');
-  doneElm.classList.add('is-danger');
-  doneElm.classList.add('m-2');
+  doneElm.classList.add('button', 'is-danger', 'm-2');
   doneElm.innerHTML = "&#128473;";
   doneElm.addEventListener('click', generateRemoveChore(choreIdx));
   choreTopElm.appendChild(doneElm);
@@ -74,8 +62,7 @@ function showChoreTitle(choreIdx, choreElm) {
 function showChore(choreIdx, editList) {
   var chore = data.chores[choreIdx];
   var choreElm = document.createElement('div');
-  choreElm.classList.add('box');
-  choreElm.classList.add('mt-6');
+  choreElm.classList.add('box', 'mt-6');
 
   showChoreTitle(choreIdx, choreElm);
   showDays(choreIdx, choreElm);
@@ -100,7 +87,7 @@ function generateRemoveChore(choreIdx) {
   return function() {
     data.chores.splice(choreIdx, 1);
     saveData(data);
-    loadChoresForDay(data);
+    loadDay(data);
     showChores();
   };
 }
@@ -112,7 +99,7 @@ function generateRenameChore(choreIdx) {
     if (newTitle != null) {
       data.chores[choreIdx].title = newTitle;
       saveData(data);
-      loadChoresForDay(data);
+      loadDay(data);
       showChores();
     }
   };
@@ -136,7 +123,7 @@ function generateToggleDay(choreIdx, dayIdx) {
     }
     // hard refresh
     saveData(data);
-    loadChoresForDay(data);
+    loadDay(data);
     showChores();
   };
 }
@@ -153,7 +140,7 @@ function connectButtons() {
             'days': [0,1,2,3,4,5,6],
           });
         saveData(data);
-        loadChoresForDay(data);
+        loadDay(data);
         showChores();
       }
     });

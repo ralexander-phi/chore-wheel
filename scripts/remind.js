@@ -1,44 +1,6 @@
-function createReminderTitleElm(reminder, reminderIdx) {
-  var reminderElm = document.createElement('div');
-  reminderElm.classList.add('box');
-
-  var reminderText = document.createElement('h2');
-  reminderElm.appendChild(reminderText);
-  reminderText.innerText = reminder.title;
-  reminderText.classList.add('title');
-  reminderText.classList.add('is-3');
-
-  var buttons = document.createElement('div');
-  reminderElm.appendChild(buttons);
-  buttons.classList.add('mt-4');
-
-  var edit = document.createElement('button');
-  buttons.appendChild(edit);
-  edit.innerText = 'Rename';
-  edit.classList.add('button');
-  edit.classList.add('is-outlined');
-  edit.classList.add('m-2');
-  edit.addEventListener('click', generateRenameReminder(reminderIdx));
-
-  var doneElm = document.createElement('button');
-  buttons.appendChild(doneElm);
-  doneElm.classList.add('button');
-  doneElm.classList.add('is-danger');
-  doneElm.classList.add('m-2');
-  doneElm.innerHTML = "&#128473;";
-  doneElm.addEventListener('click', generateRemoveReminder(reminderIdx));
-
-  var snoozeHelp = document.createElement('p');
-  reminderElm.appendChild(snoozeHelp);
-  snoozeHelp.innerText = 'Next occurance: ';
-  snoozeHelp.classList.add('mt-2');
-  snoozeHelp.classList.add('is-vcentered');
-
+function createSnoozeElm(reminder, reminderIdx) {
   var snoozeElm = document.createElement('button');
-  reminderElm.appendChild(snoozeElm);
-  snoozeElm.classList.add('button');
-  snoozeElm.classList.add('m-2');
-  snoozeElm.classList.add('is-vcentered');
+  snoozeElm.classList.add('button', 'm-2', 'is-vcentered');
 
   if (reminder.snoozedUntil === null) {
     snoozeElm.innerText = "Today";
@@ -46,6 +8,48 @@ function createReminderTitleElm(reminder, reminderIdx) {
     snoozeElm.innerText = DAYS[reminder.snoozedUntil];
   }
   snoozeElm.addEventListener('click', generateSnoozeReminder(reminderIdx));
+
+  return snoozeElm;
+}
+
+function createReminderButtons(reminderIdx) {
+  var buttons = document.createElement('div');
+  buttons.classList.add('mt-4');
+
+  var edit = document.createElement('button');
+  buttons.appendChild(edit);
+  edit.innerText = 'Rename';
+  edit.classList.add('button', 'is-outlined', 'm-2');
+  edit.addEventListener('click', generateRenameReminder(reminderIdx));
+
+  var doneElm = document.createElement('button');
+  buttons.appendChild(doneElm);
+  doneElm.classList.add('button', 'is-danger', 'm-2');
+  doneElm.innerHTML = "&#128473;";
+  doneElm.addEventListener('click', generateRemoveReminder(reminderIdx));
+
+  return buttons;
+}
+
+function createReminderTitleElm(reminder, reminderIdx) {
+  var reminderElm = document.createElement('div');
+  reminderElm.classList.add('box');
+
+  var reminderText = document.createElement('h2');
+  reminderElm.appendChild(reminderText);
+  reminderText.innerText = reminder.title;
+  reminderText.classList.add('title', 'is-3');
+
+  reminderElm.appendChild(
+    createReminderButtons(reminderIdx));
+
+  var snoozeHelp = document.createElement('p');
+  reminderElm.appendChild(snoozeHelp);
+  snoozeHelp.innerText = 'Next occurance: ';
+  snoozeHelp.classList.add('mt-2', 'is-vcentered');
+
+  reminderElm.appendChild(
+    createSnoozeElm(reminder, reminderIdx));
 
   return reminderElm;
 }
