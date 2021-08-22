@@ -3,7 +3,7 @@
 }
 
 .chore-wrap {
-  width: 20em;
+  min-width: 25em;
 }
 
 .strikethrough {

@@ -8,6 +8,26 @@ function createReminderTitleElm(reminder, reminderIdx) {
   reminderText.classList.add('title');
   reminderText.classList.add('is-3');
 
+  var buttons = document.createElement('div');
+  reminderElm.appendChild(buttons);
+  buttons.classList.add('mt-4');
+
+  var edit = document.createElement('button');
+  buttons.appendChild(edit);
+  edit.innerText = 'Rename';
+  edit.classList.add('button');
+  edit.classList.add('is-outlined');
+  edit.classList.add('m-2');
+  edit.addEventListener('click', generateRenameReminder(reminderIdx));
+
+  var doneElm = document.createElement('button');
+  buttons.appendChild(doneElm);
+  doneElm.classList.add('button');
+  doneElm.classList.add('is-danger');
+  doneElm.classList.add('m-2');
+  doneElm.innerHTML = "&#128473;";
+  doneElm.addEventListener('click', generateRemoveReminder(reminderIdx));
+
   var snoozeHelp = document.createElement('p');
   reminderElm.appendChild(snoozeHelp);
   snoozeHelp.innerText = 'Next occurance: ';
@@ -20,34 +40,12 @@ function createReminderTitleElm(reminder, reminderIdx) {
   snoozeElm.classList.add('m-2');
   snoozeElm.classList.add('is-vcentered');
 
-  var buttons = document.createElement('div');
-  reminderElm.appendChild(buttons);
-  buttons.classList.add('mt-4');
-
   if (reminder.snoozedUntil === null) {
     snoozeElm.innerText = "Today";
   } else {
     snoozeElm.innerText = DAYS[reminder.snoozedUntil];
   }
   snoozeElm.addEventListener('click', generateSnoozeReminder(reminderIdx));
-
-  var edit = document.createElement('button');
-  buttons.appendChild(edit);
-  edit.innerText = 'Rename';
-  edit.classList.add('button');
-  edit.classList.add('is-dark');
-  edit.classList.add('is-outlined');
-  edit.classList.add('m-2');
-  edit.addEventListener('click', generateRenameReminder(reminderIdx));
-
-  var doneElm = document.createElement('button');
-  buttons.appendChild(doneElm);
-  doneElm.classList.add('button');
-  doneElm.classList.add('is-danger');
-  doneElm.classList.add('is-outlined');
-  doneElm.classList.add('m-2');
-  doneElm.innerText = "Remove";
-  doneElm.addEventListener('click', generateRemoveReminder(reminderIdx));
 
   return reminderElm;
 }

@@ -1,11 +1,9 @@
 function show() {
   var wheel = document.querySelector('#wheel');
-  wheel.classList.add('mt-6');
   wheel.classList.add('is-flex');
   wheel.classList.add('is-flex-direction-row');
   wheel.classList.add('is-flex-wrap-wrap');
   var reminderList = document.querySelector('#reminder');
-  reminderList.classList.add('mt-6');
   var heading = document.querySelector('h1');
 
   var data = getData();
@@ -62,13 +60,11 @@ function show() {
 
   for (var chIdx in todaysChores) {
     var chore = todaysChores[chIdx];
-    var buttonWrap = document.createElement('div');
-    wheel.appendChild(buttonWrap);
-    buttonWrap.classList.add('mb-4');
-    buttonWrap.classList.add('chore-wrap');
-
-    var button = document.createElement('button');
-    buttonWrap.appendChild(button);
+    var button = document.createElement('div');
+    wheel.appendChild(button);
+    button.classList.add('mr-6');
+    button.classList.add('mb-6');
+    button.classList.add('chore-wrap');
     button.classList.add('button');
     button.classList.add('p-5');
     styleTask(button, chore.isDone);
@@ -96,9 +92,9 @@ function styleTask(button, isDone) {
     button.classList.add('done');
     button.classList.add('is-light');
     button.classList.add('strikethrough');
-    button.classList.remove('is-success');
+    button.classList.remove('is-primary');
   } else {
-    button.classList.add('is-success');
+    button.classList.add('is-primary');
     button.classList.remove('is-light');
     button.classList.remove('done');
     button.classList.remove('strikethrough');

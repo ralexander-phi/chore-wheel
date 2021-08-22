@@ -19,7 +19,7 @@ var DEFAULT_CHORES = {
     { 'title': 'Mop', 'days': [4] },
   ],
   'reminders': [
-    { 'title': 'Edit to customize', 'snoozedUntil': null },
+    { 'title': 'Buy milk', 'snoozedUntil': null },
   ],
   'version': '2020-09-05',
   'currentChoreStatus': null,

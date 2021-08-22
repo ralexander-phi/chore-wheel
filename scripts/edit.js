@@ -7,13 +7,13 @@ function loadSettings() {
 
 function styleDay(elm, isActive) {
   if (isActive) {
-    elm.classList.add('is-info');
+    elm.classList.add('is-primary');
     elm.classList.add('has-text-weight-bold');
     elm.classList.remove('is-dark');
     elm.classList.remove('is-outlined');
     elm.classList.remove('strikethrough');
   } else {
-    elm.classList.remove('is-info');
+    elm.classList.remove('is-primary');
     elm.classList.remove('has-text-weight-bold');
     elm.classList.add('is-dark');
     elm.classList.add('is-outlined');
@@ -47,27 +47,24 @@ function showChoreTitle(choreIdx, choreElm) {
 
   var choreTopElm = document.createElement('div');
 
-  var choreTextElm = document.createElement('t2');
+  var choreTextElm = document.createElement('h2');
   choreTextElm.classList.add('title');
   choreTextElm.classList.add('is-3');
   choreTextElm.innerText = chore.title;
   choreTopElm.appendChild(choreTextElm);
 
   var choreEditElm = document.createElement('button');
-  choreEditElm.innerText = 'Edit';
+  choreEditElm.innerText = 'Rename';
   choreEditElm.classList.add('button');
-  choreEditElm.classList.add('is-dark');
-  choreEditElm.classList.add('is-outlined');
-  choreEditElm.classList.add('ml-4');
+  choreEditElm.classList.add('m-2');
   choreEditElm.addEventListener('click', generateRenameChore(choreIdx));
   choreTopElm.appendChild(choreEditElm);
 
   var doneElm = document.createElement('div');
   doneElm.classList.add('button');
   doneElm.classList.add('is-danger');
-  doneElm.classList.add('is-outlined');
-  doneElm.classList.add('ml-4');
-  doneElm.innerText = "Remove";
+  doneElm.classList.add('m-2');
+  doneElm.innerHTML = "&#128473;";
   doneElm.addEventListener('click', generateRemoveChore(choreIdx));
   choreTopElm.appendChild(doneElm);
 
