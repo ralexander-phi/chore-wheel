@@ -20,7 +20,7 @@ module.exports = function(grunt) {
     cssmin: {
       default: {
         files: {
-          'docs/chorewheel.css': ['style/chorewheel.css'],
+          'docs/chorewheel.css': ['style/chorewheel.css', 'style/bulma.min.css'],
         }
       }
     },

@@ -1,11 +1,13 @@
 function show() {
   var wheel = document.querySelector('#wheel');
+  wheel.classList.add('mt-6');
   var reminderList = document.querySelector('#reminder');
+  reminderList.classList.add('mt-6');
   var heading = document.querySelector('h1');
 
   var data = getData();
   var todaysChores = data.currentChoreStatus;
-  heading.innerHTML = 'Tasks for ' + DAYS[data.currentDay];
+  heading.innerText = 'Tasks for ' + DAYS[data.currentDay];
 
   // Clear
   while (wheel.firstChild) {
@@ -28,48 +30,42 @@ function show() {
 
       var reminderElm = document.createElement('div');
       reminderElm.classList.add('reminder');
+      reminderElm.classList.add('is-4');
+      reminderElm.classList.add('mt-4');
 
-      var reminderText = document.createElement('div');
-      reminderText.classList.add('reminderText');
-      reminderText.innerHTML = reminder.title;
+      var reminderText = document.createElement('span');
+      reminderText.classList.add('title');
+      reminderText.classList.add('is-4');
+      reminderText.innerText = reminder.title;
       reminderElm.appendChild(reminderText);
 
-      var buttonsElm = document.createElement('div');
-      buttonsElm.classList.add('buttons');
-
-      var snoozeElm = document.createElement('div');
+      var snoozeElm = document.createElement('button');
       snoozeElm.classList.add('button');
-      snoozeElm.classList.add('snooze');
-      snoozeElm.innerHTML = "Snooze";
+      snoozeElm.classList.add('ml-5');
+      snoozeElm.innerText = "Snooze";
       snoozeElm.addEventListener('click', generateTapSnooze(remIdx));
-      buttonsElm.appendChild(snoozeElm);
+      reminderElm.appendChild(snoozeElm);
 
-      var sepElm = document.createElement('div');
-      sepElm.classList.add('buttonSep');
-      buttonsElm.appendChild(sepElm);
-
-      var doneElm = document.createElement('div');
+      var doneElm = document.createElement('button');
       doneElm.classList.add('button');
-      doneElm.classList.add('dismiss');
-      doneElm.innerHTML = "Dismiss";
+      doneElm.classList.add('ml-4');
+      doneElm.innerText = "Complete";
       doneElm.addEventListener('click', generateTapDismiss(remIdx));
-      buttonsElm.appendChild(doneElm);
+      reminderElm.appendChild(doneElm);
 
-      reminderElm.appendChild(buttonsElm);
       reminderList.appendChild(reminderElm);
     }
   }
 
   for (var chIdx in todaysChores) {
     var chore = todaysChores[chIdx];
-    var choreElm = document.createElement('div');
-    choreElm.classList.add('task');
-    if (chore.isDone) {
-      choreElm.classList.add('done');
-    }
-    choreElm.innerHTML = chore.title;
-    choreElm.addEventListener('click', tapTask);
-    wheel.appendChild(choreElm);
+    var button = document.createElement('button');
+    wheel.appendChild(button);
+    button.classList.add('button');
+    button.classList.add('m-2');
+    styleTask(button, chore.isDone);
+    button.innerText = chore.title;
+    button.addEventListener('click', tapTask);
   }
 }
 
@@ -87,16 +83,24 @@ function updateChoreCompletion(title, isDone) {
   saveData(data);
 }
 
-function tapTask(clickEvent) {
-  var isDone = false;
-  if (clickEvent.target.classList.contains('done')) {
-    clickEvent.target.classList.remove('done');
+function styleTask(button, isDone) {
+  if (isDone) {
+    button.classList.add('done');
+    button.classList.add('is-light');
+    button.classList.remove('is-success');
+    button.style = 'text-decoration: line-through;';
   } else {
-    clickEvent.target.classList.add('done');
-    isDone = true;
+    button.classList.add('is-success');
+    button.classList.remove('is-light');
+    button.classList.remove('done');
+    button.style = 'text-decoration: none;';
   }
+}
 
-  var title = clickEvent.target.innerHTML;
+function tapTask(clickEvent) {
+  var isDone = !(clickEvent.target.classList.contains('done'));
+  var title = clickEvent.target.innerText;
+  styleTask(clickEvent.target, isDone);
   updateChoreCompletion(title, isDone);
 }
 

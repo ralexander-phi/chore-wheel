@@ -5,22 +5,37 @@ function loadSettings() {
   confettiToggle.checked = Boolean(data.settings.confetti);
 }
 
+function styleDay(elm, isActive) {
+  if (isActive) {
+    elm.classList.add('is-info');
+    elm.classList.remove('is-dark');
+    elm.classList.remove('is-outlined');
+    elm.style.fontWeight = 'bold';
+  } else {
+    elm.classList.remove('is-info');
+    elm.classList.add('is-dark');
+    elm.classList.add('is-outlined');
+    elm.style = 'text-decoration: line-through;';
+    elm.style.fontWeight = 'normal';
+  }
+}
+
 function showDays(choreIdx, choreElm) {
   var chore = data.chores[choreIdx];
 
   var choreBottomElm = document.createElement('div');
-  choreBottomElm.classList.add('choreBottom');
+  choreBottomElm.classList.add('mt-3');
 
   for (var dayIdx in DAYS) {
     var dayStr = DAYS[dayIdx];
-    var dayToggle = document.createElement('div');
-    dayToggle.classList.add('dayOfWeek');
+    var dayToggle = document.createElement('button');
+    dayToggle.classList.add('button');
+    dayToggle.classList.add('m-2');
     dayToggle.classList.add(DAYS[dayIdx]);
-    if (chore.days.includes(Number(dayIdx))) {
-      dayToggle.classList.add('active');
-    }
+    var isActive = chore.days.includes(Number(dayIdx));
+    styleDay(dayToggle, isActive);
     dayToggle.addEventListener('click', generateToggleDay(choreIdx, dayIdx));
-    dayToggle.innerHTML = dayStr;
+    dayToggle.innerText = dayStr;
     choreBottomElm.appendChild(dayToggle);
   }
   choreElm.appendChild(choreBottomElm);
@@ -30,32 +45,39 @@ function showChoreTitle(choreIdx, choreElm) {
   var chore = data.chores[choreIdx];
 
   var choreTopElm = document.createElement('div');
-  choreTopElm.classList.add('choreTop');
 
-  var choreTextElm = document.createElement('div');
-  choreTextElm.classList.add('choreText');
-  choreTextElm.innerHTML = "✏️ " + chore.title;
-  choreTextElm.addEventListener('click', generateRenameChore(choreIdx));
+  var choreTextElm = document.createElement('t2');
+  choreTextElm.classList.add('title');
+  choreTextElm.classList.add('is-3');
+  choreTextElm.innerText = chore.title;
   choreTopElm.appendChild(choreTextElm);
 
-  var buttonsElm = document.createElement('div');
-  buttonsElm.classList.add('buttons');
+  var choreEditElm = document.createElement('button');
+  choreEditElm.innerText = 'Edit';
+  choreEditElm.classList.add('button');
+  choreEditElm.classList.add('is-dark');
+  choreEditElm.classList.add('is-outlined');
+  choreEditElm.classList.add('ml-4');
+  choreEditElm.addEventListener('click', generateRenameChore(choreIdx));
+  choreTopElm.appendChild(choreEditElm);
 
   var doneElm = document.createElement('div');
   doneElm.classList.add('button');
-  doneElm.classList.add('dismiss');
-  doneElm.innerHTML = "Dismiss";
+  doneElm.classList.add('is-danger');
+  doneElm.classList.add('is-outlined');
+  doneElm.classList.add('ml-4');
+  doneElm.innerText = "Remove";
   doneElm.addEventListener('click', generateRemoveChore(choreIdx));
-  buttonsElm.appendChild(doneElm);
+  choreTopElm.appendChild(doneElm);
 
-  choreTopElm.appendChild(buttonsElm);
   choreElm.appendChild(choreTopElm);
 }
 
 function showChore(choreIdx, editList) {
   var chore = data.chores[choreIdx];
   var choreElm = document.createElement('div');
-  choreElm.classList.add('chore');
+  choreElm.classList.add('box');
+  choreElm.classList.add('mt-6');
 
   showChoreTitle(choreIdx, choreElm);
   showDays(choreIdx, choreElm);

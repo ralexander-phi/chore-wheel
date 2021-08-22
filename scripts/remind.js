@@ -1,40 +1,54 @@
 function createReminderTitleElm(reminder, reminderIdx) {
   var reminderElm = document.createElement('div');
-  reminderElm.classList.add('reminder');
+  reminderElm.classList.add('box');
 
-  var reminderText = document.createElement('div');
-  reminderText.classList.add('reminderText');
-  reminderText.innerHTML = "✏️ " + reminder.title;
-  reminderText.addEventListener('click', generateRenameReminder(reminderIdx));
+  var reminderText = document.createElement('h2');
   reminderElm.appendChild(reminderText);
+  reminderText.innerText = reminder.title;
+  reminderText.classList.add('title');
+  reminderText.classList.add('is-3');
 
-  var buttonsElm = document.createElement('div');
-  buttonsElm.classList.add('buttons');
+  var snoozeHelp = document.createElement('p');
+  reminderElm.appendChild(snoozeHelp);
+  snoozeHelp.innerText = 'Next occurance: ';
+  snoozeHelp.classList.add('mt-2');
+  snoozeHelp.classList.add('is-vcentered');
 
-  var snoozeElm = document.createElement('div');
+  var snoozeElm = document.createElement('button');
+  reminderElm.appendChild(snoozeElm);
   snoozeElm.classList.add('button');
-  snoozeElm.classList.add('snooze');
+  snoozeElm.classList.add('m-2');
+  snoozeElm.classList.add('is-vcentered');
+
+  var buttons = document.createElement('div');
+  reminderElm.appendChild(buttons);
+  buttons.classList.add('mt-4');
 
   if (reminder.snoozedUntil === null) {
-    snoozeElm.innerHTML = "Active";
+    snoozeElm.innerText = "Today";
   } else {
-    snoozeElm.innerHTML = "Snoozed until " + DAYS[reminder.snoozedUntil];
+    snoozeElm.innerText = DAYS[reminder.snoozedUntil];
   }
   snoozeElm.addEventListener('click', generateSnoozeReminder(reminderIdx));
-  buttonsElm.appendChild(snoozeElm);
 
-  var sepElm = document.createElement('div');
-  sepElm.classList.add('buttonSep');
-  buttonsElm.appendChild(sepElm);
+  var edit = document.createElement('button');
+  buttons.appendChild(edit);
+  edit.innerText = 'Rename';
+  edit.classList.add('button');
+  edit.classList.add('is-dark');
+  edit.classList.add('is-outlined');
+  edit.classList.add('m-2');
+  edit.addEventListener('click', generateRenameReminder(reminderIdx));
 
-  var doneElm = document.createElement('div');
+  var doneElm = document.createElement('button');
+  buttons.appendChild(doneElm);
   doneElm.classList.add('button');
-  doneElm.classList.add('dismiss');
-  doneElm.innerHTML = "Dismiss";
+  doneElm.classList.add('is-danger');
+  doneElm.classList.add('is-outlined');
+  doneElm.classList.add('m-2');
+  doneElm.innerText = "Remove";
   doneElm.addEventListener('click', generateRemoveReminder(reminderIdx));
-  buttonsElm.appendChild(doneElm);
 
-  reminderElm.appendChild(buttonsElm);
   return reminderElm;
 }
 
