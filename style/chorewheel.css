@@ -1,3 +1,12 @@
 .button {
   text-transform: none;
 }
+
+.chore-wrap {
+  width: 20em;
+}
+
+.strikethrough {
+  text-decoration: line-through;
+}
+

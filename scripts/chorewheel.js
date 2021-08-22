@@ -4,8 +4,6 @@ function show() {
   wheel.classList.add('is-flex');
   wheel.classList.add('is-flex-direction-row');
   wheel.classList.add('is-flex-wrap-wrap');
-  wheel.classList.add('is-justify-content-space-between');
-  wheel.style = "column-count: '3';";
   var reminderList = document.querySelector('#reminder');
   reminderList.classList.add('mt-6');
   var heading = document.querySelector('h1');
@@ -66,8 +64,8 @@ function show() {
     var chore = todaysChores[chIdx];
     var buttonWrap = document.createElement('div');
     wheel.appendChild(buttonWrap);
-    buttonWrap.style = "width: 20em;";
     buttonWrap.classList.add('mb-4');
+    buttonWrap.classList.add('chore-wrap');
 
     var button = document.createElement('button');
     buttonWrap.appendChild(button);
@@ -97,13 +95,13 @@ function styleTask(button, isDone) {
   if (isDone) {
     button.classList.add('done');
     button.classList.add('is-light');
+    button.classList.add('strikethrough');
     button.classList.remove('is-success');
-    button.style = 'text-decoration: line-through;';
   } else {
     button.classList.add('is-success');
     button.classList.remove('is-light');
     button.classList.remove('done');
-    button.style = 'text-decoration: none;';
+    button.classList.remove('strikethrough');
   }
 }
 

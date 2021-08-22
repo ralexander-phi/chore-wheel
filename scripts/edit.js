@@ -8,15 +8,16 @@ function loadSettings() {
 function styleDay(elm, isActive) {
   if (isActive) {
     elm.classList.add('is-info');
+    elm.classList.add('has-text-weight-bold');
     elm.classList.remove('is-dark');
     elm.classList.remove('is-outlined');
-    elm.style.fontWeight = 'bold';
+    elm.classList.remove('strikethrough');
   } else {
     elm.classList.remove('is-info');
+    elm.classList.remove('has-text-weight-bold');
     elm.classList.add('is-dark');
     elm.classList.add('is-outlined');
-    elm.style = 'text-decoration: line-through;';
-    elm.style.fontWeight = 'normal';
+    elm.classList.add('strikethrough');
   }
 }
 
