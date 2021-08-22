@@ -13,39 +13,35 @@ function clear() {
 function showReminders(data) {
   var reminderList = document.querySelector('#reminder');
 
-  if (data.reminders.length == 0) {
-    // Pass
-  } else {
-    for (var remIdx in data.reminders) {
-      var reminder = data.reminders[remIdx];
+  for (var remIdx in data.reminders) {
+    var reminder = data.reminders[remIdx];
 
-      if (reminder.snoozedUntil !== null) {
-        // This reminder is snoozed
-        continue;
-      }
-
-      var reminderElm = document.createElement('div');
-      reminderElm.classList.add('reminder', 'is-4', 'mt-4');
-
-      var reminderText = document.createElement('span');
-      reminderText.classList.add('title', 'is-4');
-      reminderText.innerText = reminder.title;
-      reminderElm.appendChild(reminderText);
-
-      var snoozeElm = document.createElement('button');
-      snoozeElm.classList.add('button', 'ml-5');
-      snoozeElm.innerText = "Snooze";
-      snoozeElm.addEventListener('click', generateTapSnooze(remIdx));
-      reminderElm.appendChild(snoozeElm);
-
-      var doneElm = document.createElement('button');
-      doneElm.classList.add('button', 'ml-4');
-      doneElm.innerText = "Complete";
-      doneElm.addEventListener('click', generateTapDismiss(remIdx));
-      reminderElm.appendChild(doneElm);
-
-      reminderList.appendChild(reminderElm);
+    if (reminder.snoozedUntil !== null) {
+      // This reminder is snoozed
+      continue;
     }
+
+    var reminderElm = document.createElement('div');
+    reminderElm.classList.add('reminder', 'is-4', 'mt-4');
+
+    var reminderText = document.createElement('span');
+    reminderText.classList.add('title', 'is-4');
+    reminderText.innerText = reminder.title;
+    reminderElm.appendChild(reminderText);
+
+    var snoozeElm = document.createElement('button');
+    snoozeElm.classList.add('button', 'ml-5');
+    snoozeElm.innerText = "Snooze";
+    snoozeElm.addEventListener('click', generateTapSnooze(remIdx));
+    reminderElm.appendChild(snoozeElm);
+
+    var doneElm = document.createElement('button');
+    doneElm.classList.add('button', 'ml-4');
+    doneElm.innerText = "Complete";
+    doneElm.addEventListener('click', generateTapDismiss(remIdx));
+    reminderElm.appendChild(doneElm);
+
+    reminderList.appendChild(reminderElm);
   }
 }
 
