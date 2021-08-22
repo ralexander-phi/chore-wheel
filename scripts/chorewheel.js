@@ -1,6 +1,11 @@
 function show() {
   var wheel = document.querySelector('#wheel');
   wheel.classList.add('mt-6');
+  wheel.classList.add('is-flex');
+  wheel.classList.add('is-flex-direction-row');
+  wheel.classList.add('is-flex-wrap-wrap');
+  wheel.classList.add('is-justify-content-space-between');
+  wheel.style = "column-count: '3';";
   var reminderList = document.querySelector('#reminder');
   reminderList.classList.add('mt-6');
   var heading = document.querySelector('h1');
@@ -59,10 +64,15 @@ function show() {
 
   for (var chIdx in todaysChores) {
     var chore = todaysChores[chIdx];
+    var buttonWrap = document.createElement('div');
+    wheel.appendChild(buttonWrap);
+    buttonWrap.style = "width: 20em;";
+    buttonWrap.classList.add('mb-4');
+
     var button = document.createElement('button');
-    wheel.appendChild(button);
+    buttonWrap.appendChild(button);
     button.classList.add('button');
-    button.classList.add('m-2');
+    button.classList.add('p-5');
     styleTask(button, chore.isDone);
     button.innerText = chore.title;
     button.addEventListener('click', tapTask);
