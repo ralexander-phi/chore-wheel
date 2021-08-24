@@ -22,7 +22,7 @@ module.exports = function(grunt) {
         files: {
           'docs/chorewheel.css': [
 		  'style/bulma.min.css',
-		  'style/materia.min.css',
+		  'style/darkly.min.css',
 		  'style/chorewheel.css'
 	  ],
         }

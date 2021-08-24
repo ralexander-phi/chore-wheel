@@ -52,7 +52,7 @@ function showChores(data) {
     var chore = todaysChores[chIdx];
     var button = document.createElement('div');
     wheel.appendChild(button);
-    button.classList.add('mr-6', 'mb-6', 'chore-wrap', 'button', 'p-5');
+    button.classList.add('mr-6', 'mb-5', 'chore-wrap', 'button', 'p-5', 'is-rounded');
     styleTask(button, chore.isDone);
     button.innerText = chore.title;
     button.addEventListener('click', tapTask);
